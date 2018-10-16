@@ -9,13 +9,14 @@
 
 global_settings {
     assumed_gamma 1
-    max_trace_level 16
+    max_trace_level 32
     photons {
       //count 7550000
       //count 50000000
-      count 500000000
-      max_trace_level 16
-      //radius , 2.0
+      //count 500000000
+      count 500000
+      max_trace_level 32
+      radius , 2.0
       //radius 10.1
       //media 100000
       //media 64, 128
@@ -25,26 +26,34 @@ global_settings {
       //media 1000, 16
       //jitter .4
       //media 100,1
+      spacing 0.05
+      autostop 0
+      jitter 0
+
     }
     //subsurface {}
 }
 
-#declare lenseToPlane = (-0.5);
+#declare lenseToPlane = (-0.24);
 //#declare lenseToPlane = (8);
-#declare fov = 15;
 
 ////lab
-#declare CamPos = < lenseToPlane-1, 1.5, -5>;
-//#declare LookAtTarg = < 2, -0.75, 1.5>;
-#declare LookAtTarg = < lenseToPlane + 1, 0.0, 1.5>;
+//#declare CamPos = < lenseToPlane-0.005, 0.33, -0.1>;
+////#declare LookAtTarg = < 2, -0.75, 1.5>;
+//#declare LookAtTarg = < lenseToPlane + 1, 0.0, 0.1>;
+
+//closeup
+#declare fov = 179;
+#declare CamPos = < lenseToPlane-0.0001, 0.0, 0.0>;
+#declare LookAtTarg = < lenseToPlane+1.0, -0.0, 0.0>;
 
 ////labalt
-//#declare CamPos = < 12, 10, 12>;
-//#declare LookAtTarg = < 2, -0.1, -0.1>;
-////#declare CamPos = < -12, 1, -1>;
-////#declare CamPos = < 1.5, 0.5, 0.0>;
+//#declare fov = 40;
+//#declare CamPos = < -5, 5, -5>;
+//#declare LookAtTarg = < 5, -5, 5>;
 
 ////top down
+//#declare fov = 15;
 //#declare CamPos = < 0, 18, 0>;
 //#declare LookAtTarg = < 0, 0, 0>;
 
@@ -65,10 +74,12 @@ camera {
     angle fov
 }
 
+/*
 light_source {CamPos, color Gray25
     photons {refraction off reflection off}
     media_interaction off
 }
+*/
 
 /*
 light_source { CamPos, color Gray25
@@ -115,7 +126,6 @@ light_source {<-50, 0.5, 0>, color rgb < 0, 0, 1>
 }
 */
 
-/*
 light_source {<-150, -0.75, 0>, color rgb < 1, 0, 0>
     spotlight radius 0.1 falloff 0.3 point_at < 0, -0.15, 0>
     photons {refraction on reflection on}
@@ -131,7 +141,6 @@ light_source {<-150, 0.75, 0>, color rgb < 0, 0, 1>
     spotlight radius 0.1 falloff 0.3 point_at < 0, 0.15, 0>
     photons {refraction on reflection on}
 }
-*/
 
 /*
 box
@@ -205,7 +214,8 @@ intersection {
 
   texture {
     pigment { Col_Glass_Clear }
-    finish { ambient 0 diffuse 0 reflection 0.01 }
+    //finish { ambient 0 diffuse 0 reflection 0.01 }
+    finish { F_Glass6 }
   }
 
   interior { ior 1.5 }
@@ -214,6 +224,7 @@ intersection {
   {
    reflection on
    refraction on
+   collect off
   }
 
 	//scale < 1, 1, 1>
@@ -248,11 +259,12 @@ box { <1+lenseToPlane,-2,-15>, <1+lenseToPlane+0.1, 2, 15>
     photons { target refraction off reflection on }
 }
 
+/*
 #declare R = 1.1;
 #declare A = 0.66;
-#declare ishift = 0.125;
+#declare ishift = 0.0;
 difference {
-	cylinder {<ishift-0.005, 0, 0>, < ishift+0.005, 0, 0>, R}
+	cylinder {<ishift-0.0005, 0, 0>, < ishift+0.0005, 0, 0>, R}
 	sphere {<ishift, 0, 0>, A}
 	translate <0, 0.0, 0>
 
@@ -267,6 +279,7 @@ difference {
       collect off
     }
 }
+*/
 
 /*
 box
