@@ -9,14 +9,14 @@
 
 global_settings {
     assumed_gamma 1
-    max_trace_level 4
+    max_trace_level 64
     photons {
       //spacing 0.0001
 //// count 150000
       count 5330000
-      max_trace_level 4
-      media 100, 1
-      //media 500, 3
+      max_trace_level 64
+      //media 100, 1
+      media 500, 8
     }
 }
 
@@ -24,7 +24,7 @@ global_settings {
 
 ////lab
 #declare CamPos = < -15, 2, -15>;
-#declare LookAtTarg = < 2, -0.1, -0.1>;
+#declare LookAtTarg = < 2, -0.75, 1.0>;
 
 ////labalt
 //#declare CamPos = < 12, 10, 12>;
@@ -32,7 +32,7 @@ global_settings {
 ////#declare CamPos = < -12, 1, -1>;
 ////#declare CamPos = < 1.5, 0.5, 0.0>;
 
-#declare fov = 18;
+#declare fov = 15;
 
 ////top down
 //#declare CamPos = < 0, 18, 0>;
@@ -59,6 +59,12 @@ camera {
 light_source {CamPos, color Gray25
     photons {refraction off reflection off}
     media_interaction off
+}
+*/
+
+/*
+light_source { CamPos, color Gray25
+    photons { refraction on reflection on }
 }
 */
 
@@ -117,7 +123,7 @@ light_source {<-150, 0.75, 0>, color rgb < 0, 0, 1>
     photons {refraction on reflection on}
 }
 
-
+/*
 box
  { -10,10 pigment { rgbt 1 } hollow
    interior
@@ -126,6 +132,7 @@ box
      }
    }
  }
+*/
 
 
 
@@ -172,7 +179,7 @@ isosurface {
 }*/
 
 
-light_source {<xSetupOffset, 5, 0>, color rgb < 0.1, 0.1, 0.1>
+light_source {<xSetupOffset, 5, 0>, color rgb < 0.05, 0.05, 0.05>
     spotlight radius 10.0 falloff 20.0 point_at < xSetupOffset, 0.0, 0.0>
 
     //area_light <10, 0, 0>, <0, 0, 10>, 10, 10
@@ -233,8 +240,13 @@ intersection {
   // refraction on
   //}
 
-  pigment { Col_Glass_Clear }
+  texture {
+    pigment { Col_Glass_Clear }
+    finish {ambient 0 diffuse 0 reflection 0.01}
+  }
+
   interior { ior 1.5 }
+
   photons
   {
    reflection on
