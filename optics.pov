@@ -5,25 +5,30 @@
 #include "colors.inc"
 #include "glass.inc"
 
-#default {finish {ambient 0}}
+#default { finish { ambient 0.0 } }
 
 global_settings {
     assumed_gamma 1
-    max_trace_level 64
+    max_trace_level 128
     photons {
-      //spacing 0.0001
-//// count 150000
-      count 5330000
-      max_trace_level 64
-      //media 100, 1
-      media 500, 8
+      count 7550000
+      max_trace_level 128
+      //radius , 2.0
+      //radius 10.1
+      //media 100000
+      //media 64, 128
+      //media 64, 128
+      //media 1000, 2
+      //media 500, 8
+      //media 1000, 16
     }
+    //subsurface {}
 }
 
-//#declare CamPos = < -12, 10, -12>;
+#declare fov = 15;
 
 ////lab
-#declare CamPos = < -15, 2, -15>;
+#declare CamPos = < -10, 2, -15>;
 #declare LookAtTarg = < 2, -0.75, 1.0>;
 
 ////labalt
@@ -32,7 +37,6 @@ global_settings {
 ////#declare CamPos = < -12, 1, -1>;
 ////#declare CamPos = < 1.5, 0.5, 0.0>;
 
-#declare fov = 15;
 
 ////top down
 //#declare CamPos = < 0, 18, 0>;
@@ -107,6 +111,7 @@ light_source {<-50, 0.5, 0>, color rgb < 0, 0, 1>
 }
 */
 
+/*
 light_source {<-150, -0.75, 0>, color rgb < 1, 0, 0>
     spotlight radius 0.1 falloff 0.3 point_at < 0, -0.15, 0>
     photons {refraction on reflection on}
@@ -122,6 +127,7 @@ light_source {<-150, 0.75, 0>, color rgb < 0, 0, 1>
     spotlight radius 0.1 falloff 0.3 point_at < 0, 0.15, 0>
     photons {refraction on reflection on}
 }
+*/
 
 /*
 box
@@ -133,8 +139,6 @@ box
    }
  }
 */
-
-
 
 box {<-100,-3,-100>, < 100, -2, 100>
     texture {
@@ -149,6 +153,7 @@ texture {
     //pigment { color White }
     finish {ambient 0 diffuse 0 reflection 0.01}
 }
+
 #declare GlassInt1 =
 interior {ior 1.5}
 
@@ -161,25 +166,7 @@ interior {ior 1.5}
 	}
 #end
 
-
-/*#declare Fn = function {sin(z*pi)/5 - x}
-isosurface {
-    function {Fn(x,y,z)}
-    threshold 0
-    eval
-//    max_gradient 9.25
-    contained_by {box {<-1, 0,-2>, < 1, 1, 2>}}
-    texture {
-        pigment {color White}
-        finish {ambient 0 diffuse 0.2 reflection 0.8}
-    }
-    photons {target collect off}
-    rotate -y*15
-    translate < 2, 0, 0>
-}*/
-
-
-light_source {<xSetupOffset, 5, 0>, color rgb < 0.05, 0.05, 0.05>
+light_source {<xSetupOffset, 5, 0>, color rgb <1,1,1> //< .15, 0.15, 0.15>
     spotlight radius 10.0 falloff 20.0 point_at < xSetupOffset, 0.0, 0.0>
 
     //area_light <10, 0, 0>, <0, 0, 10>, 10, 10
@@ -193,9 +180,11 @@ light_source {<xSetupOffset, 5, 0>, color rgb < 0.05, 0.05, 0.05>
 box { <xSetupOffset,-0.25,-0.25>, <xSetupOffset-0.1, 0.25, 0.25>
     texture {
         pigment { color Green }
-        finish { reflection {0.9} brilliance 0.5 ambient 0.5 diffuse 0.5 }
-        //finish { reflection {1.0} ambient 0.0 diffuse 0.0 }
+        finish { reflection {0.0} brilliance 5.0 ambient 0 diffuse 0.9 }
+    //    //finish { reflection {1.0} ambient 0.0 diffuse 0.0 }
     }
+
+    ///texture { finish { phong 0.5 } }
 
     //photons {refraction on reflection on}
 	  //PhotonTarget(yes, yes, false)
@@ -219,6 +208,7 @@ box { <xSetupOffset,-0.25,-0.25>, <xSetupOffset-0.1, 0.25, 0.25>
   translate <0,0.65,0>
 }
 
+/*
 intersection {
   //fl=2 ior=1.5 lr=1
 
@@ -251,6 +241,7 @@ intersection {
   {
    reflection on
    refraction on
+   collect off
   }
 
 	scale < 1, 1, 1>
@@ -259,18 +250,17 @@ intersection {
 	rotate -y*90
   translate < 0, 0, -1.0>
 }
+*/
 
-#declare lenseToPlane = (2 + sin(clock));
+#declare lenseToPlane = (2);
 box { <1+lenseToPlane,-2,-5>, <1+lenseToPlane+0.1, 2, 5>
 
     texture {
         pigment { color White }
         //finish { brilliance 0.0 ambient 0.01 diffuse 0.01 }
-        finish { reflection {0.0} brilliance 0.001 ambient 0.001 diffuse 0.9 }
+        finish { reflection {0.0} brilliance 0.01 ambient 0.0 diffuse 0.99 }
     }
 	
-    //PhotonTarget(no, yes, yes)
-
     photons {
       target
       refraction off
@@ -278,27 +268,38 @@ box { <1+lenseToPlane,-2,-5>, <1+lenseToPlane+0.1, 2, 5>
     }
 }
 
+/*
+#declare R = 1.1;
+#declare A = 0.1;
+#declare ishift = 1.5;
+difference {
+	cylinder {<ishift, 0, 0>, < ishift+0.001, 0, 0>, R}
+	sphere {<ishift, 0, 0>, A}
+	translate <0, 0.0, 0>
+
+    texture {
+        pigment { color White }
+    }
+
+    photons {
+      target
+      refraction off
+      reflection yes
+      collect off
+    }
+}
+*/
 
 /*
-#declare T = 0.475*2;
-#declare R = 1;
-intersection {
-    sphere {<-R, 0, 0>, R translate x*T/2}
-    sphere {< R, 0, 0>, R translate -x*T/2}
-    texture {GlassTex1}
-    interior {GlassInt1}
-    PhotonTarget(no, yes, yes)
-    translate < 0, 0.5,-2>
-}
-
-#declare R = 1;
-difference {
-	cylinder {<-0.1, 0, 0>, < R, 0, 0>, R}
-	sphere {< R, 0, 0>, R}
-//	texture {pigment {color White}}
-	texture {GlassTex1}
-	interior {GlassInt1}
-//	PhotonTarget(no, yes, yes)
-	translate <-1, 0.5, 3>
-}
+box
+ { <-5, -6.5, -10.5>, <3, 6.5, 10.25>
+   pigment { rgbt 1 } hollow
+   interior
+   { media
+     { scattering { 1, 0.07 extinction 0.01 }
+       samples 30
+     }
+   }
+   photons { pass_through }
+ }
 */
