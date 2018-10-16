@@ -12,7 +12,7 @@ global_settings {
     max_trace_level 64
     photons {
       //count 7550000
-      count 5330000
+      count 50000000
       max_trace_level 64
       //radius , 2.0
       //radius 10.1
@@ -28,10 +28,11 @@ global_settings {
     //subsurface {}
 }
 
-#declare fov = 35;
+#declare fov = 15;
 
 ////lab
 #declare CamPos = < -10, 2, -15>;
+//#declare LookAtTarg = < 2, -0.75, 1.5>;
 #declare LookAtTarg = < 2, -0.75, 1.5>;
 
 ////labalt
@@ -50,10 +51,10 @@ global_settings {
 //#declare LookAtTarg = < 0, 0, 0>;
 
 ////sideways
-//#declare CamPos = < 0, 0, -10>;
+//#declare CamPos = < 0, 0, -20>;
 //#declare LookAtTarg = < 0, -0.1, 0>;
 
-#declare xSetupOffset = -1.0;
+#declare xSetupOffset = -2.125;
 
 camera {
     location CamPos
@@ -112,7 +113,6 @@ light_source {<-50, 0.5, 0>, color rgb < 0, 0, 1>
 }
 */
 
-/*
 light_source {<-150, -0.75, 0>, color rgb < 1, 0, 0>
     spotlight radius 0.1 falloff 0.3 point_at < 0, -0.15, 0>
     photons {refraction on reflection on}
@@ -128,7 +128,6 @@ light_source {<-150, 0.75, 0>, color rgb < 0, 0, 1>
     spotlight radius 0.1 falloff 0.3 point_at < 0, 0.15, 0>
     photons {refraction on reflection on}
 }
-*/
 
 /*
 box
@@ -151,7 +150,7 @@ box {<-100,-3,-100>, < 100, -2, 100>
 }
 
 
-light_source {<xSetupOffset, 1.75, 0>, color rgb <0.15,0.15,0.15> //< .15, 0.15, 0.15>
+light_source {<xSetupOffset, 2.75, 0>, color rgb <0.25,0.25,0.25> //< .15, 0.15, 0.15>
     spotlight radius 10.0 falloff 20.0 point_at < xSetupOffset, 0.0, 0.0>
 
     photons { refraction on reflection on }
@@ -164,13 +163,13 @@ box { <xSetupOffset,-0.25,-0.25>, <xSetupOffset-0.1, 0.25, 0.25>
         //finish { reflection {1.0} brilliance 5.0 diffuse 0.9 }
         //finish { reflection {0.5} brilliance 5.0 ambient 0 diffuse 0.9 }
         //finish { ambient 0 diffuse 0 reflection 1 }
-        finish { reflection { 0.33 metallic } brilliance 1.0 emission 0.1 diffuse 0.5 }
+        finish { reflection { 0.1 metallic } brilliance 1.0 emission 0.01 diffuse 0.9 }
     }
 
     photons { target refraction off reflection on }
 
     rotate z*45
-    translate <-0.25,0.65,0>
+    translate <-0.25,1.33,0>
 }
 
 intersection {
@@ -207,14 +206,14 @@ intersection {
    refraction on
   }
 
-	scale < 1, 1, 1>
-  translate < 1, 1, 0>
+	//scale < 1, 1, 1>
+  //translate < 1, 1, 0>
 	rotate -x*90
 	rotate -y*90
-  translate < 0, 0, -1.0>
+  //translate < 0, 0, -1.0>
 }
 
-#declare lenseToPlane = (2);
+#declare lenseToPlane = (1.0);
 box { <1+lenseToPlane,-2,-5>, <1+lenseToPlane+0.1, 2, 5>
 
     texture {
@@ -240,11 +239,12 @@ box { <1+lenseToPlane,-2,-5>, <1+lenseToPlane+0.1, 2, 5>
     photons { target refraction off reflection on }
 }
 
-#declare R = 1.5;
-#declare A = 0.25;
-#declare ishift = 1.001;
+/*
+#declare R = 1.1;
+#declare A = 0.33;
+#declare ishift = 1.00 + (1.7321 * 0.5 * 0.5);
 difference {
-	cylinder {<ishift, 0, 0>, < ishift+0.0001, 0, 0>, R}
+	cylinder {<ishift-0.00001, 0, 0>, < ishift+0.00001, 0, 0>, R}
 	sphere {<ishift, 0, 0>, A}
 	translate <0, 0.0, 0>
 
@@ -259,6 +259,7 @@ difference {
       collect off
     }
 }
+*/
 
 /*
 box
