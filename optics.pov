@@ -5,7 +5,7 @@
 #include "colors.inc"
 #include "glass.inc"
 
-#default { finish { ambient 0.1 } }
+#default { finish { ambient 0.01 } }
 
 global_settings {
     assumed_gamma 1
@@ -14,9 +14,9 @@ global_settings {
       //count 7550000
       //count 50000000
       //count 500000000
-      count 800000000
+      count 50000000
       max_trace_level 8
-      radius , 2.0
+      radius , 1000.0
       //radius 10.1
       //media 100000
       //media 64, 128
@@ -25,10 +25,10 @@ global_settings {
       //media 1000, 8
       //media 1000, 16
       //jitter .4
-      //media 100,3
+      //media 500,3
       //spacing 0.05
-      autostop 0
-      jitter 0
+      //autostop 1
+      //jitter 0
     }
     //subsurface {}
 }
@@ -43,13 +43,13 @@ global_settings {
 //#declare LookAtTarg = < lenseToPlane + 1, 0.0, 0.1>;
 
 //closeup
-#declare fov = 179;
-#declare CamPos = < lenseToPlane-0.008, 0.0, 0.0>;
-#declare LookAtTarg = < lenseToPlane+1.0, 0.001, 0.0>;
+//#declare fov = 179;
+//#declare CamPos = < lenseToPlane-0.008, -0.1, 0.0>;
+//#declare LookAtTarg = < lenseToPlane+1.0, -0.01, 0.0>;
 
 ////labalt
-#declare fov = 50;
-#declare CamPos = < -1, 0.75, -5>;
+#declare fov = 45;
+#declare CamPos = < -1, 0.0, -5>;
 #declare LookAtTarg = < 1.75, -1.25, 5.25>;
 
 ////top down
@@ -125,7 +125,6 @@ light_source {<-50, 0.5, 0>, color rgb < 0, 0, 1>
 }
 */
 
-/*
 light_source {<-150, -0.75, 0>, color rgb < 1, 0, 0>
     spotlight radius 0.1 falloff 0.3 point_at < 0, -0.15, 0>
     photons {refraction on reflection on}
@@ -141,7 +140,6 @@ light_source {<-150, 0.75, 0>, color rgb < 0, 0, 1>
     spotlight radius 0.1 falloff 0.3 point_at < 0, 0.15, 0>
     photons {refraction on reflection on}
 }
-*/
 
 /* broken
 box
@@ -216,23 +214,15 @@ intersection {
    collect off
   }
 
-	//scale < 1, 1, 1>
-  //translate < 1, 1, 0>
 	rotate -x*90
 	rotate -y*90
-  //translate < 0, 0, -1.0>
 }
 
-box { <lenseToPlane,-2,-15>, <lenseToPlane+0.1, 2, 15>
+box { <lenseToPlane,-2,-10>, <lenseToPlane+0.1, 2, 10>
 
     texture {
         pigment { color White }
-        //finish { reflection {0.0} brilliance 1.0 diffuse 1.0 }
         finish { reflection {0.0} brilliance 0.1 ambient 0.0 diffuse 2.0 }
-
-        //finish { reflection {1.0} brilliance 0.9 diffuse 0.99 }
-        //finish { diffuse 0.9
-        //         phong 0.5 }
     }
 
 /*
@@ -250,8 +240,8 @@ box { <lenseToPlane,-2,-15>, <lenseToPlane+0.1, 2, 15>
 
 /*
 #declare R = 1.1;
-#declare A = 0.66;
-#declare ishift = 0.0;
+#declare A = 0.5;
+#declare ishift = 0.5;
 difference {
 	cylinder {<ishift-0.0005, 0, 0>, < ishift+0.0005, 0, 0>, R}
 	sphere {<ishift, 0, 0>, A}
