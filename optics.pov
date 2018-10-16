@@ -19,7 +19,7 @@ global_settings {
       //media 64, 128
       //media 64, 128
       //media 1000, 2
-      media 100, 2
+      media 500, 8
       //media 1000, 16
       //autostop 0
       //jitter .4
