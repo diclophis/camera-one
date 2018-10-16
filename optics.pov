@@ -11,7 +11,7 @@ global_settings {
     assumed_gamma 1
     max_trace_level 64
     photons {
-      count 7550000
+      //count 7550000
       max_trace_level 64
       //radius , 2.0
       //radius 10.1
@@ -69,9 +69,11 @@ light_source {CamPos, color Gray25
 }
 */
 
+/*
 light_source { CamPos, color Gray25
     photons { refraction on reflection on }
 }
+*/
 
 //light_source {CamPos, color Gray25
 //    photons { refraction on reflection on }
@@ -112,6 +114,7 @@ light_source {<-50, 0.5, 0>, color rgb < 0, 0, 1>
 }
 */
 
+/*
 light_source {<-150, -0.75, 0>, color rgb < 1, 0, 0>
     spotlight radius 0.1 falloff 0.3 point_at < 0, -0.15, 0>
     photons {refraction on reflection on}
@@ -127,6 +130,7 @@ light_source {<-150, 0.75, 0>, color rgb < 0, 0, 1>
     spotlight radius 0.1 falloff 0.3 point_at < 0, 0.15, 0>
     photons {refraction on reflection on}
 }
+*/
 
 /*
 box
@@ -149,13 +153,11 @@ box {<-100,-3,-100>, < 100, -2, 100>
 }
 
 
-/*
 light_source {<xSetupOffset, 1.75, 0>, color rgb <0.15,0.15,0.15> //< .15, 0.15, 0.15>
     spotlight radius 10.0 falloff 20.0 point_at < xSetupOffset, 0.0, 0.0>
 
     photons { refraction on reflection on }
 }
-*/
 
 
 box { <xSetupOffset,-0.25,-0.25>, <xSetupOffset-0.1, 0.25, 0.25>
@@ -164,6 +166,7 @@ box { <xSetupOffset,-0.25,-0.25>, <xSetupOffset-0.1, 0.25, 0.25>
         //finish { reflection {1.0} brilliance 5.0 diffuse 0.9 }
         //finish { reflection {0.5} brilliance 5.0 ambient 0 diffuse 0.9 }
         //finish { ambient 0 diffuse 0 reflection 1 }
+        finish { reflection {0.9} brilliance 0.5 ambient 0.5 diffuse 0.5 }
     }
 
     photons { target refraction off reflection on }
@@ -205,7 +208,6 @@ intersection {
   {
    reflection on
    refraction on
-   collect off
   }
 
 	scale < 1, 1, 1>
@@ -221,7 +223,9 @@ box { <1+lenseToPlane,-2,-5>, <1+lenseToPlane+0.1, 2, 5>
 
     texture {
         pigment { color White }
-        finish { reflection {0.0} brilliance 1.0 diffuse 1.0 }
+        //finish { reflection {0.0} brilliance 1.0 diffuse 1.0 }
+        finish { reflection {0.0} brilliance 0.001 ambient 0.001 diffuse 0.9 }
+
         //finish { reflection {1.0} brilliance 0.9 diffuse 0.99 }
         //finish { diffuse 0.9
         //         phong 0.5 }
@@ -237,7 +241,7 @@ box { <1+lenseToPlane,-2,-5>, <1+lenseToPlane+0.1, 2, 5>
             }// end of texture
 */
 
-    //photons { target refraction off reflection on }
+    photons { target refraction off reflection on }
 }
 
 /*
