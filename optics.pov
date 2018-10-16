@@ -17,31 +17,44 @@ global_settings { assumed_gamma 1.0 }
 
 #default {finish {ambient 0}}
 
-global_settings {
-    assumed_gamma 1
-    max_trace_level 10
-    photons {
-//        spacing 0.025
-//        spacing 0.2
-// count 150000
-        count 1500000
-        max_trace_level 10
-//        media 100, 2
-        media 500, 3
-    }
-}
+//global_settings {
+//    assumed_gamma 1
+//    max_trace_level 10
+//    photons {
+////        spacing 0.025
+////        spacing 0.2
+//// count 150000
+//        count 1500000
+//        max_trace_level 10
+//        //media 100, 2
+//        //media 500, 3
+//        media 1000, 10
+//    }
+//}
 
-//#declare CamPos = < 0, 18, 0>;
-//#declare LookAtTarg = < 0, 0, 0>;
 
 //#declare CamPos = < -12, 1, -1>;
 //#declare CamPos = < 1.5, 0.5, 0.0>;
 //#declare CamPos = < -12, 10, -12>;
-#declare CamPos = < -15, 2, -15>;
 //#declare CamPos = < 12, 10, 12>;
-#declare LookAtTarg = < -0.1, -0.1, 0>;
 
-#declare xSetupOffset = -2.5;
+//lab
+#declare CamPos = < -15, 2, -15>;
+#declare LookAtTarg = < 3, -0.1, -0.1>;
+
+////top down
+//#declare CamPos = < 0, 18, 0>;
+//#declare LookAtTarg = < 0, 0, 0>;
+
+////head on
+//#declare CamPos = < -18, 1, 0>;
+//#declare LookAtTarg = < 0, 0, 0>;
+
+////sideways
+//#declare CamPos = < 0, 0, -10>;
+//#declare LookAtTarg = < 0, -0.1, 0>;
+
+#declare xSetupOffset = -1.0;
 
 camera {
     location CamPos
@@ -249,17 +262,22 @@ sphere {< 0, 0, 0>, 1
 }
 */
 
-light_source {<xSetupOffset+1, 5, 0>, color rgb < 1.0, 1.0, 1.0>
+light_source {<xSetupOffset, 5, 0>, color rgb < 1.0, 1.0, 1.0>
     spotlight radius 10.0 falloff 20.0 point_at < xSetupOffset, 0.0, 0.0>
-    photons {refraction on reflection on}
-}
 
+    //area_light <10, 0, 0>, <0, 0, 10>, 10, 10
+
+    //adaptive 1
+    //jitter
+
+    photons { refraction on reflection on }
+}
 
 box { <xSetupOffset,-0.25,-0.25>, <xSetupOffset-0.1, 0.25, 0.25>
     texture {
-        pigment { color Green }
-        //finish { brilliance 0.5 }
-        finish { reflection {0.5} ambient 0.5 diffuse 0.5 }
+        pigment { color White }
+    //    //finish { brilliance 0.5 ambient 0.5 diffuse 0.5 }
+        finish { reflection {1.0} ambient 0.0 diffuse 0.0 }
     }
     //photons {refraction on reflection on}
 	  //PhotonTarget(yes, yes, false)
@@ -272,13 +290,18 @@ box { <xSetupOffset,-0.25,-0.25>, <xSetupOffset-0.1, 0.25, 0.25>
     //        intervals 1 samples 4
     //    }
     //}
-    photons {
-      target
-      refraction off
-      reflection on
-    }
+    //photons {
+    //  target
+    //  refraction off
+    //  reflection on
+    //}
+
+	rotate z*45
+  translate <0,0.75,0>
+
 }
 
+/*
 intersection {
   //fl=2 ior=1.5 lr=1
 
@@ -293,15 +316,14 @@ intersection {
 	texture {GlassTex1}
 	interior {GlassInt1}
 
-	///PhotonTarget(no, yes, yes)
+	PhotonTarget(no, yes, yes)
 
-  photons
-  {
-   target
-   reflection on
-   refraction on
-   collect off
-  }
+  //photons
+  //{
+  // target
+  // reflection on
+  // refraction on
+  //}
 
 	scale < 1, 1, 1>
   translate < 1, 1, 0>
@@ -309,9 +331,11 @@ intersection {
 	rotate -y*90
   translate < 0, 0, -1.0>
 }
+*/
 
-#declare lenseToPlane = 4;
+#declare lenseToPlane = 1;
 box { <1+lenseToPlane,-2,-5>, <1+lenseToPlane+0.1, 2, 5>
+
     texture {
         pigment { color White }
         finish { brilliance 1.0 }
@@ -320,12 +344,11 @@ box { <1+lenseToPlane,-2,-5>, <1+lenseToPlane+0.1, 2, 5>
 	
     //PhotonTarget(no, yes, yes)
 
-    photons {
-      target
-      refraction off
-      reflection yes
-      collect off
-    }
+    //photons {
+    //  target
+    //  refraction off
+    //  reflection yes
+    //}
 }
 
 
