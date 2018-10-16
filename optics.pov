@@ -9,18 +9,19 @@
 
 global_settings {
     assumed_gamma 1
-    max_trace_level 64
+    max_trace_level 16
     photons {
       //count 7550000
-      count 50000000
-      max_trace_level 64
+      //count 50000000
+      count 500000000
+      max_trace_level 16
       //radius , 2.0
       //radius 10.1
       //media 100000
       //media 64, 128
       //media 64, 128
-      //media 1000, 2
-      media 500, 8
+      //media 10000, 0.1
+      //media 1000, 8
       //media 1000, 16
       //jitter .4
       //media 100,1
@@ -28,12 +29,14 @@ global_settings {
     //subsurface {}
 }
 
+#declare lenseToPlane = (-0.5);
+//#declare lenseToPlane = (8);
 #declare fov = 15;
 
 ////lab
-#declare CamPos = < -10, 2, -15>;
+#declare CamPos = < lenseToPlane-1, 1.5, -5>;
 //#declare LookAtTarg = < 2, -0.75, 1.5>;
-#declare LookAtTarg = < 2, -0.75, 1.5>;
+#declare LookAtTarg = < lenseToPlane + 1, 0.0, 1.5>;
 
 ////labalt
 //#declare CamPos = < 12, 10, 12>;
@@ -41,13 +44,12 @@ global_settings {
 ////#declare CamPos = < -12, 1, -1>;
 ////#declare CamPos = < 1.5, 0.5, 0.0>;
 
-
 ////top down
 //#declare CamPos = < 0, 18, 0>;
 //#declare LookAtTarg = < 0, 0, 0>;
 
 ////head on
-//#declare CamPos = < -18, 1, 0>;
+//#declare CamPos = < -18, 0, 0>;
 //#declare LookAtTarg = < 0, 0, 0>;
 
 ////sideways
@@ -63,16 +65,16 @@ camera {
     angle fov
 }
 
-/*
 light_source {CamPos, color Gray25
     photons {refraction off reflection off}
     media_interaction off
 }
-*/
 
+/*
 light_source { CamPos, color Gray25
     photons { refraction on reflection on }
 }
+*/
 
 //light_source {CamPos, color Gray25
 //    photons { refraction on reflection on }
@@ -113,6 +115,7 @@ light_source {<-50, 0.5, 0>, color rgb < 0, 0, 1>
 }
 */
 
+/*
 light_source {<-150, -0.75, 0>, color rgb < 1, 0, 0>
     spotlight radius 0.1 falloff 0.3 point_at < 0, -0.15, 0>
     photons {refraction on reflection on}
@@ -128,6 +131,7 @@ light_source {<-150, 0.75, 0>, color rgb < 0, 0, 1>
     spotlight radius 0.1 falloff 0.3 point_at < 0, 0.15, 0>
     photons {refraction on reflection on}
 }
+*/
 
 /*
 box
@@ -140,6 +144,7 @@ box
  }
 */
 
+/*
 box {<-100,-3,-100>, < 100, -2, 100>
     texture {
         pigment { checker color White, color rgb < 0.2, 0, 0.4> }
@@ -148,18 +153,23 @@ box {<-100,-3,-100>, < 100, -2, 100>
 
     //photons { target refraction off reflection yes }
 }
+*/
 
-
-light_source {<xSetupOffset, 2.75, 0>, color rgb <0.25,0.25,0.25> //< .15, 0.15, 0.15>
-    spotlight radius 10.0 falloff 20.0 point_at < xSetupOffset, 0.0, 0.0>
+light_source {<xSetupOffset, 2.75, 0>, color rgb <0.125,0.25,0.125> //< .15, 0.15, 0.15>
+    spotlight radius 10.0 falloff 20.0 point_at < xSetupOffset, -0.1, 0.1>
 
     photons { refraction on reflection on }
 }
 
+light_source {<xSetupOffset, -2.75, 0>, color rgb <0.01,0.01,0.25> //< .15, 0.15, 0.15>
+    spotlight radius 10.0 falloff 20.0 point_at < xSetupOffset, 0.0, -0.0>
+
+    photons { refraction on reflection on }
+}
 
 box { <xSetupOffset,-0.25,-0.25>, <xSetupOffset-0.1, 0.25, 0.25>
     texture {
-        pigment { color Green }
+        pigment { color White }
         //finish { reflection {1.0} brilliance 5.0 diffuse 0.9 }
         //finish { reflection {0.5} brilliance 5.0 ambient 0 diffuse 0.9 }
         //finish { ambient 0 diffuse 0 reflection 1 }
@@ -168,8 +178,8 @@ box { <xSetupOffset,-0.25,-0.25>, <xSetupOffset-0.1, 0.25, 0.25>
 
     photons { target refraction off reflection on }
 
-    rotate z*45
-    translate <-0.25,1.33,0>
+    rotate z*50
+    translate <-0.5,1.56,0>
 }
 
 intersection {
@@ -213,8 +223,7 @@ intersection {
   //translate < 0, 0, -1.0>
 }
 
-#declare lenseToPlane = (1.0);
-box { <1+lenseToPlane,-2,-5>, <1+lenseToPlane+0.1, 2, 5>
+box { <1+lenseToPlane,-2,-15>, <1+lenseToPlane+0.1, 2, 15>
 
     texture {
         pigment { color White }
@@ -239,12 +248,11 @@ box { <1+lenseToPlane,-2,-5>, <1+lenseToPlane+0.1, 2, 5>
     photons { target refraction off reflection on }
 }
 
-/*
 #declare R = 1.1;
-#declare A = 0.33;
-#declare ishift = 1.00 + (1.7321 * 0.5 * 0.5);
+#declare A = 0.66;
+#declare ishift = 0.125;
 difference {
-	cylinder {<ishift-0.00001, 0, 0>, < ishift+0.00001, 0, 0>, R}
+	cylinder {<ishift-0.005, 0, 0>, < ishift+0.005, 0, 0>, R}
 	sphere {<ishift, 0, 0>, A}
 	translate <0, 0.0, 0>
 
@@ -259,7 +267,6 @@ difference {
       collect off
     }
 }
-*/
 
 /*
 box
