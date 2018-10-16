@@ -12,6 +12,7 @@ global_settings {
     max_trace_level 64
     photons {
       //count 7550000
+      count 5330000
       max_trace_level 64
       //radius , 2.0
       //radius 10.1
@@ -21,14 +22,13 @@ global_settings {
       //media 1000, 2
       media 500, 8
       //media 1000, 16
-      //autostop 0
       //jitter .4
       //media 100,1
     }
     //subsurface {}
 }
 
-#declare fov = 25;
+#declare fov = 35;
 
 ////lab
 #declare CamPos = < -10, 2, -15>;
@@ -69,11 +69,9 @@ light_source {CamPos, color Gray25
 }
 */
 
-/*
 light_source { CamPos, color Gray25
     photons { refraction on reflection on }
 }
-*/
 
 //light_source {CamPos, color Gray25
 //    photons { refraction on reflection on }
@@ -149,7 +147,7 @@ box {<-100,-3,-100>, < 100, -2, 100>
         finish { brilliance 0.25 }
     }
 
-    photons { target refraction off reflection yes }
+    //photons { target refraction off reflection yes }
 }
 
 
@@ -166,7 +164,7 @@ box { <xSetupOffset,-0.25,-0.25>, <xSetupOffset-0.1, 0.25, 0.25>
         //finish { reflection {1.0} brilliance 5.0 diffuse 0.9 }
         //finish { reflection {0.5} brilliance 5.0 ambient 0 diffuse 0.9 }
         //finish { ambient 0 diffuse 0 reflection 1 }
-        finish { reflection {0.9} brilliance 0.5 ambient 0.5 diffuse 0.5 }
+        finish { reflection { 0.33 metallic } brilliance 1.0 emission 0.1 diffuse 0.5 }
     }
 
     photons { target refraction off reflection on }
@@ -175,7 +173,6 @@ box { <xSetupOffset,-0.25,-0.25>, <xSetupOffset-0.1, 0.25, 0.25>
     translate <-0.25,0.65,0>
 }
 
-/*
 intersection {
   //fl=2 ior=1.5 lr=1
 
@@ -216,15 +213,14 @@ intersection {
 	rotate -y*90
   translate < 0, 0, -1.0>
 }
-*/
 
-#declare lenseToPlane = (-.75);
+#declare lenseToPlane = (2);
 box { <1+lenseToPlane,-2,-5>, <1+lenseToPlane+0.1, 2, 5>
 
     texture {
         pigment { color White }
         //finish { reflection {0.0} brilliance 1.0 diffuse 1.0 }
-        finish { reflection {0.0} brilliance 0.001 ambient 0.001 diffuse 0.9 }
+        finish { reflection {0.0} brilliance 0.1 ambient 0.0 diffuse 2.0 }
 
         //finish { reflection {1.0} brilliance 0.9 diffuse 0.99 }
         //finish { diffuse 0.9
@@ -244,12 +240,11 @@ box { <1+lenseToPlane,-2,-5>, <1+lenseToPlane+0.1, 2, 5>
     photons { target refraction off reflection on }
 }
 
-/*
-#declare R = 1.1;
-#declare A = 0.1;
-#declare ishift = 1.5;
+#declare R = 1.5;
+#declare A = 0.25;
+#declare ishift = 1.001;
 difference {
-	cylinder {<ishift, 0, 0>, < ishift+0.001, 0, 0>, R}
+	cylinder {<ishift, 0, 0>, < ishift+0.0001, 0, 0>, R}
 	sphere {<ishift, 0, 0>, A}
 	translate <0, 0.0, 0>
 
@@ -264,7 +259,6 @@ difference {
       collect off
     }
 }
-*/
 
 /*
 box
