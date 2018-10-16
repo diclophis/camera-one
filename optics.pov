@@ -1,16 +1,7 @@
-// This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License.
-// To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/ or send a
-// letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
-
-// Persistence Of Vision raytracer sample file.
-// File: optics.pov
-// Author: Christopher J. Huff
-// Updated: 2013/02/15 for 3.7
-//
-// -w320 -h240
 // -w800 -h600 +a0.3
 
 #version 3.7;
+
 global_settings { assumed_gamma 1.0 } 
 
 #include "colors.inc"
@@ -126,26 +117,6 @@ light_source {<-50, 0.25, 0>, color rgb < 0, 0, 1>
 }
 */
 
-#macro Block(From, To)
-    union {
-        cylinder {From, To*(x+z), 0.1 scale < 1, 10*To.y, 1>
-            texture {
-                pigment {checker color Gray90, color Gray70
-                    scale 0.1
-                }
-                finish {brilliance 0.5}
-            }
-        }
-        cylinder {From, To*(x+z), 0.025
-            translate y*To
-            texture {
-                pigment {color rgb < 1, 0.7, 0.2>}
-                finish {ambient 0.8}
-            }
-        }
-    }
-#end
-
 box {<-100,-3,-100>, < 100, -2, 100>
     texture {
         pigment {checker color Gray90, color rgb < 0.2, 0, 0.4>}
@@ -153,55 +124,9 @@ box {<-100,-3,-100>, < 100, -2, 100>
     }
 }
 
-/*
-//what does this do?????
-box {<-7,-0.25,-0.25>, < 6, 0.25, 0.25> hollow
-    texture {pigment {color rgbf 1}}
-    interior {
-        media {
-            scattering {1, color White extinction 0}
-//            emission color White*0.2
-            method 3
-            intervals 1 samples 4
-        }
-    }
-    photons {target}
-}
-*/
-
-#declare MirrorTex1 =
-texture {
-    pigment {color White}
-    finish {ambient 0 diffuse 0 reflection 1}
-}
-#declare HalfMirrorTex1 =
-texture {
-    pigment {color White filter 0.5}
-    finish {ambient 0 diffuse 0 reflection 0.5}
-}
-#declare RedMirrorTex =
-texture {
-    pigment {color rgb < 0, 1, 1> filter 1}
-    finish {ambient 0 diffuse 0 reflection Red}
-}
-#declare BlueMirrorTex =
-texture {
-    pigment {color rgb < 1, 1, 0> filter 1}
-    finish {ambient 0 diffuse 0 reflection Blue}
-}
 #declare GlassTex1 =
 texture {
     pigment {color White filter 0.99}
-    finish {ambient 0 diffuse 0 reflection 0.01}
-}
-#declare GreenGlassTex1 =
-texture {
-    pigment {color Green filter 0.99}
-    finish {ambient 0 diffuse 0 reflection 0.01}
-}
-#declare RedGlassTex1 =
-texture {
-    pigment {color Red filter 0.99}
     finish {ambient 0 diffuse 0 reflection 0.01}
 }
 #declare GlassInt1 =
@@ -233,34 +158,6 @@ isosurface {
     translate < 2, 0, 0>
 }*/
 
-#macro Mirror(Pos, Ang, Width, Height, Tex)
-	box {<-0.1,-0.1,-Width/2>, < 0, Height, Width/2>
-	    texture {Tex}
-//	    PhotonTarget(yes, yes, yes)
-	    rotate -y*Ang
-	    translate Pos
-	}
-#end
-
-/*
-object {Mirror(<-3, 0, 0>, 3*45, 2, 1, BlueMirrorTex)}
-object {Mirror(<-3, 0, 3>,-45, 2, 1, MirrorTex1)}
-
-object {Mirror(<-1, 0, 0>, 180+22.5, 2, 1, RedMirrorTex)}
-object {Mirror(<-3, 0,-2>, 22.5, 2, 1, MirrorTex1)}
-*/
-
-
-/*
-//lenses
-sphere {< 0, 0, 0>, 1
-    texture {GlassTex1}
-    interior {GlassInt1}
-    PhotonTarget(no, yes, yes)
-    scale < 0.475, 1, 1>
-    translate < 1, 0.5, 0>
-}
-*/
 
 light_source {<xSetupOffset, 5, 0>, color rgb < 1.0, 1.0, 1.0>
     spotlight radius 10.0 falloff 20.0 point_at < xSetupOffset, 0.0, 0.0>
@@ -290,11 +187,11 @@ box { <xSetupOffset,-0.25,-0.25>, <xSetupOffset-0.1, 0.25, 0.25>
     //        intervals 1 samples 4
     //    }
     //}
-    //photons {
-    //  target
-    //  refraction off
-    //  reflection on
-    //}
+    photons {
+      target
+      refraction off
+      reflection on
+    }
 
 	rotate z*45
   translate <0,0.75,0>
