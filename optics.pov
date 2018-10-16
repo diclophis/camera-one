@@ -14,9 +14,9 @@ global_settings {
       //count 7550000
       //count 50000000
       //count 500000000
-      count 500000
+      count 5000000
       max_trace_level 32
-      radius , 2.0
+      radius , 100.0
       //radius 10.1
       //media 100000
       //media 64, 128
@@ -34,7 +34,7 @@ global_settings {
     //subsurface {}
 }
 
-#declare lenseToPlane = (-0.24);
+#declare lenseToPlane = (0.65);
 //#declare lenseToPlane = (8);
 
 ////lab
@@ -43,14 +43,14 @@ global_settings {
 //#declare LookAtTarg = < lenseToPlane + 1, 0.0, 0.1>;
 
 //closeup
-#declare fov = 179;
-#declare CamPos = < lenseToPlane-0.0001, 0.0, 0.0>;
-#declare LookAtTarg = < lenseToPlane+1.0, -0.0, 0.0>;
+//#declare fov = 179;
+//#declare CamPos = < lenseToPlane-0.008, 0.0, 0.0>;
+//#declare LookAtTarg = < lenseToPlane+1.0, 0.001, 0.0>;
 
 ////labalt
-//#declare fov = 40;
-//#declare CamPos = < -5, 5, -5>;
-//#declare LookAtTarg = < 5, -5, 5>;
+#declare fov = 45;
+#declare CamPos = < -2, 0.75, -5>;
+#declare LookAtTarg = < 0.75, -1.25, 5.25>;
 
 ////top down
 //#declare fov = 15;
@@ -126,6 +126,7 @@ light_source {<-50, 0.5, 0>, color rgb < 0, 0, 1>
 }
 */
 
+/*
 light_source {<-150, -0.75, 0>, color rgb < 1, 0, 0>
     spotlight radius 0.1 falloff 0.3 point_at < 0, -0.15, 0>
     photons {refraction on reflection on}
@@ -141,8 +142,9 @@ light_source {<-150, 0.75, 0>, color rgb < 0, 0, 1>
     spotlight radius 0.1 falloff 0.3 point_at < 0, 0.15, 0>
     photons {refraction on reflection on}
 }
+*/
 
-/*
+/* broken
 box
  { -10,10 pigment { rgbt 1 } hollow
    interior
@@ -153,8 +155,7 @@ box
  }
 */
 
-/*
-box {<-100,-3,-100>, < 100, -2, 100>
+box {<-100,-3,-100>, < 100, -2.01, 100>
     texture {
         pigment { checker color White, color rgb < 0.2, 0, 0.4> }
         finish { brilliance 0.25 }
@@ -162,7 +163,6 @@ box {<-100,-3,-100>, < 100, -2, 100>
 
     //photons { target refraction off reflection yes }
 }
-*/
 
 light_source {<xSetupOffset, 2.75, 0>, color rgb <0.125,0.25,0.125> //< .15, 0.15, 0.15>
     spotlight radius 10.0 falloff 20.0 point_at < xSetupOffset, -0.1, 0.1>
@@ -170,7 +170,7 @@ light_source {<xSetupOffset, 2.75, 0>, color rgb <0.125,0.25,0.125> //< .15, 0.1
     photons { refraction on reflection on }
 }
 
-light_source {<xSetupOffset, -2.75, 0>, color rgb <0.01,0.01,0.25> //< .15, 0.15, 0.15>
+light_source {<xSetupOffset, -2.00, 0>, color rgb <0.01,0.01,0.25> //< .15, 0.15, 0.15>
     spotlight radius 10.0 falloff 20.0 point_at < xSetupOffset, 0.0, -0.0>
 
     photons { refraction on reflection on }
@@ -234,7 +234,7 @@ intersection {
   //translate < 0, 0, -1.0>
 }
 
-box { <1+lenseToPlane,-2,-15>, <1+lenseToPlane+0.1, 2, 15>
+box { <lenseToPlane,-2,-15>, <lenseToPlane+0.1, 2, 15>
 
     texture {
         pigment { color White }
