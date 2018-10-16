@@ -34,11 +34,14 @@ global_settings {
 //#declare CamPos = < 0, 18, 0>;
 //#declare LookAtTarg = < 0, 0, 0>;
 
-#declare CamPos = < -12, 10, -12>;
+//#declare CamPos = < -12, 1, -1>;
+//#declare CamPos = < 1.5, 0.5, 0.0>;
+//#declare CamPos = < -12, 10, -12>;
+#declare CamPos = < -15, 2, -15>;
 //#declare CamPos = < 12, 10, 12>;
-#declare LookAtTarg = < 0, 0, 0>;
+#declare LookAtTarg = < -0.1, -0.1, 0>;
 
-#declare xSetupOffset = -0.5;
+#declare xSetupOffset = -2.5;
 
 camera {
     location CamPos
@@ -53,6 +56,11 @@ light_source {CamPos, color Gray25
     media_interaction off
 }
 */
+
+//light_source {CamPos, color Gray25
+//    photons { refraction on reflection on }
+//    media_interaction off
+//}
 
 /*
 light_source {<-50, 0.0, 0>, color rgb < 1.0, 0, 0>
@@ -69,7 +77,9 @@ light_source {<-50, 0.0, 0>, color rgb < 0, 0, 1>
     spotlight radius 0.25 falloff 0.35 point_at < 0, 0.0, 0>
     photons {refraction on reflection on}
 }
+*/
 
+/*
 light_source {<-50, 0.5, 0>, color rgb < 1.0, 0, 0>
     spotlight radius 0.5 falloff 0.51 point_at < 0, 0.5, 0>
     photons {refraction on reflection on}
@@ -87,7 +97,7 @@ light_source {<-50, 0.5, 0>, color rgb < 0, 0, 1>
 */
 
 /*
-light_source {<-50, 0.0, 0>, color rgb < 1, 0, 0>
+light_source {<-50, -0.25, 0>, color rgb < 1, 0, 0>
     spotlight radius 0.5 falloff 0.51 point_at < 0, 0.0, 0>
     photons {refraction on reflection on}
 }
@@ -97,7 +107,7 @@ light_source {<-50, 0.0, 0>, color rgb < 0, 1, 0>
     photons {refraction on reflection on}
 }
 
-light_source {<-50, 0.0, 0>, color rgb < 0, 0, 1>
+light_source {<-50, 0.25, 0>, color rgb < 0, 0, 1>
     spotlight radius 0.5 falloff 0.51 point_at < 0, 0.0, 0>
     photons {refraction on reflection on}
 }
@@ -182,7 +192,7 @@ texture {
     finish {ambient 0 diffuse 0 reflection 0.01}
 }
 #declare GlassInt1 =
-interior {ior 1.33}
+interior {ior 1.5}
 
 #macro PhotonTarget(Reflect, Refract, IgnorePhotons)
 	photons {
@@ -239,8 +249,8 @@ sphere {< 0, 0, 0>, 1
 }
 */
 
-light_source {<xSetupOffset+1, 0, 0>, color rgb < 1.0, 1.0, 1.0>
-    spotlight radius 10.0 falloff 10.1 point_at < xSetupOffset, 0.0, 0.0>
+light_source {<xSetupOffset+1, 5, 0>, color rgb < 1.0, 1.0, 1.0>
+    spotlight radius 10.0 falloff 20.0 point_at < xSetupOffset, 0.0, 0.0>
     photons {refraction on reflection on}
 }
 
@@ -248,7 +258,8 @@ light_source {<xSetupOffset+1, 0, 0>, color rgb < 1.0, 1.0, 1.0>
 box { <xSetupOffset,-0.25,-0.25>, <xSetupOffset-0.1, 0.25, 0.25>
     texture {
         pigment { color Green }
-        finish { brilliance 1.0 }
+        //finish { brilliance 0.5 }
+        finish { reflection {0.5} ambient 0.5 diffuse 0.5 }
     }
     //photons {refraction on reflection on}
 	  //PhotonTarget(yes, yes, false)
@@ -264,7 +275,7 @@ box { <xSetupOffset,-0.25,-0.25>, <xSetupOffset-0.1, 0.25, 0.25>
     photons {
       target
       refraction off
-      reflection off
+      reflection on
     }
 }
 
@@ -282,7 +293,15 @@ intersection {
 	texture {GlassTex1}
 	interior {GlassInt1}
 
-	PhotonTarget(no, yes, yes)
+	///PhotonTarget(no, yes, yes)
+
+  photons
+  {
+   target
+   reflection on
+   refraction on
+   collect off
+  }
 
 	scale < 1, 1, 1>
   translate < 1, 1, 0>
@@ -291,20 +310,22 @@ intersection {
   translate < 0, 0, -1.0>
 }
 
-#declare lenseToPlane = 1;
-
+#declare lenseToPlane = 4;
 box { <1+lenseToPlane,-2,-5>, <1+lenseToPlane+0.1, 2, 5>
     texture {
         pigment { color White }
         finish { brilliance 1.0 }
+        //finish { reflection {0.01} ambient 0.01 diffuse 0.01 }
     }
 	
     //PhotonTarget(no, yes, yes)
-    //photons {
-    //  target
-    //  refraction yes
-    //  reflection yes
-    //}
+
+    photons {
+      target
+      refraction off
+      reflection yes
+      collect off
+    }
 }
 
 
